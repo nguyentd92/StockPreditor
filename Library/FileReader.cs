@@ -75,5 +75,14 @@ namespace StockPredictor.Library
                 return null;
             }
         }
+
+        public static string ReadTxtFileByFileName(string fileName, string path)
+        {
+            List<string> fileList = GetFilesList(path);
+
+            string fileUrl = fileList.Find(url => url.Contains(fileName));
+
+            return ReadTxtFile(fileUrl);
+        }
     }
 }

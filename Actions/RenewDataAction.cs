@@ -13,7 +13,7 @@ namespace StockPredictor.Actions
 
             List<string> urlFiles = FileReader.GetFilesList(Path);
 
-            List<string> arrayData = new List<string>(urlFiles);
+            List<string> arrayData = null;
 
             foreach (string url in urlFiles)
             {

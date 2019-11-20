@@ -1,29 +1,47 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using StockPredictor.Actions;
 using StockPredictor.Library;
+using StockPredictor.Models;
 
 namespace StockPredictor.Controllers
 {
     [ApiController]
-    [Route("api/test/[action]")]
+    [Route("api/[action]")]
     public class TestController : Controller
     {
+        private const string Path = "/Users/nguyendanh/Projects/StockData";
+        public IActionResult GetAllStocks()
+        {
+            List<string> files = FileReader.GetFilesList(Path);
+
+            List<string> stockIdList = files.Select(e => FileHandler.GetFileName(e)).ToList();
+
+            return Json(stockIdList);
+        }
+
         public IActionResult ReadTxtFile() {
-            return Json(FileReader.ReadTxtFile("https://www.w3.org/TR/PNG/iso_8859-1.txt"));
+            return Json(FileReader.ReadTxtFile("/Users/nguyendanh/Projects/StockData/RAT.txt"));
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetStockById(string id) {
+            string result = FileReader.ReadTxtFileByFileName(id, Path);
+
+            string[] separator = { "\r\n" };
+
+            string[] lines = result.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+
+            List<string> top100Lines = lines.ToList().Skip(Math.Max(0, lines.Count() - 100)).ToList();
+
+            List<Stock> stocks = top100Lines.Select(e => StockTransformer.Convert(e)).ToList();
+            
+            return Json(stocks);
         }
 
         public IActionResult GetFiles() {
-            return Json(FileReader.GetFilesList("/Users/nguyendanh/Projects/StockData"));
-        }
-
-        public IActionResult GetData() {
-            return Json(null);
-            // return Json(RenewDataAction.ReadNewData());
-        }
-
-        public IActionResult TestConvert()
-        {
-            return Json(StockTransformer.Convert("PLC,20070119,7.58,7.58,7.21,7.22,490"));
+            return Json(FileReader.GetFilesList(Path));
         }
     }
 }

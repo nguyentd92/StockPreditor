@@ -24,21 +24,21 @@ namespace StockPredictor
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddHangfire(configuration => configuration
-                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
-                .UseSimpleAssemblyNameTypeSerializer()
-                .UseRecommendedSerializerSettings()
-                .UseSqlServerStorage("Server=192.168.99.101,1433;User Id=SA; Password=Dn122123", new SqlServerStorageOptions
-                {
-                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
-                    QueuePollInterval = TimeSpan.Zero,
-                    UseRecommendedIsolationLevel = true,
-                    UsePageLocksOnDequeue = true,
-                    DisableGlobalLocks = true
-                }));
+            // services.AddHangfire(configuration => configuration
+            //     .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+            //     .UseSimpleAssemblyNameTypeSerializer()
+            //     .UseRecommendedSerializerSettings()
+            //     .UseSqlServerStorage("Server=192.168.99.101,1433;User Id=SA; Password=Dn122123", new SqlServerStorageOptions
+            //     {
+            //         CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+            //         SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+            //         QueuePollInterval = TimeSpan.Zero,
+            //         UseRecommendedIsolationLevel = true,
+            //         UsePageLocksOnDequeue = true,
+            //         DisableGlobalLocks = true
+            //     }));
 
-            services.AddHangfireServer();
+            // services.AddHangfireServer();
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
@@ -52,14 +52,14 @@ namespace StockPredictor
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            GlobalConfiguration.Configuration.UseSqlServerStorage("Server=192.168.99.101,1433;User Id=SA; Password=Dn122123");
-            app.UseHangfireDashboard();
+            // GlobalConfiguration.Configuration.UseSqlServerStorage("Server=192.168.99.101,1433;User Id=SA; Password=Dn122123");
+            // app.UseHangfireDashboard();
 
             // BackgroundJob.Enqueue(() => Console.WriteLine("Fire and forget"));
 
-            RecurringJob.AddOrUpdate(() => Console.WriteLine("Recurring!"), Cron.Minutely());
+            // RecurringJob.AddOrUpdate(() => Console.WriteLine("Recurring!"), Cron.Minutely());
 
-            app.UseHangfireServer();
+            // app.UseHangfireServer();
 
             if (env.IsDevelopment())
             {

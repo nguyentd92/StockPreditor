@@ -1,0 +1,84 @@
+<div *ngIf="data$ | async as stockList">
+  <section class="selectors">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <mat-select [(value)]="chosenId" (selectionChange)="onSelect()">
+        <mat-option *ngFor="let stock of stockList" [value]="stock">{{
+          stock
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button
+      *ngIf="mode != 'Open'"
+      mat-stroked-button
+      color="accent"
+      (click)="switchMode('Open')"
+    >
+      Open
+    </button>
+    <button
+      *ngIf="mode == 'Open'"
+      mat-flat-button
+      color="accent"
+      (click)="switchMode('Open')"
+    >
+      Open
+    </button>
+    <button
+      *ngIf="mode != 'High'"
+      mat-stroked-button
+      color="accent"
+      (click)="switchMode('High')"
+    >
+      High
+    </button>
+    <button
+      *ngIf="mode == 'High'"
+      mat-flat-button
+      color="accent"
+      (click)="switchMode('High')"
+    >
+      High
+    </button>
+    <button
+      *ngIf="mode != 'Low'"
+      mat-stroked-button
+      color="accent"
+      (click)="switchMode('Low')"
+    >
+      Low
+    </button>
+    <button
+      *ngIf="mode == 'Low'"
+      mat-flat-button
+      color="accent"
+      (click)="switchMode('Low')"
+    >
+      Low
+    </button>
+    <button
+      *ngIf="mode != 'Close'"
+      mat-stroked-button
+      color="accent"
+      (click)="switchMode('Close')"
+    >
+      Close
+    </button>
+    <button
+      *ngIf="mode == 'Close'"
+      mat-flat-button
+      color="accent"
+      (click)="switchMode('Close')"
+    >
+      Close
+    </button>
+    <!-- <div id="status">
+                  <label>{{ data.chosen_id }}</label>
+                  <span>994.03</span>
+                  <span>+9.36</span>
+                  <span>+0.95%</span>
+                </div> -->
+  </section>
+  <app-stock [values]="currentValues"></app-stock>
+  <!-- <app-predictor></app-predictor> -->
+</div>

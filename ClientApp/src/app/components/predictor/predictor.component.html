@@ -1,0 +1,62 @@
+<div>
+    <h2 style="margin-left: 1em; color: grey">Next 30 days</h2>
+    <button *ngIf="data.prediction != 1" class="ml-5 mr-1" mat-stroked-button color="primary" (click)="switch(1)">1st</button>
+    <button *ngIf="data.prediction == 1" class="ml-5 mr-1" mat-flat-button color="primary" (click)="switch(1)">1st</button>
+    <button *ngIf="data.prediction != 2" mat-stroked-button color="primary" (click)="switch(2)">2nd</button>
+    <button *ngIf="data.prediction == 2" mat-flat-button color="primary" (click)="switch(2)">2nd</button>
+    <article id="predictor" class="row">
+      <div class="chart col-lg-8">
+       
+        <section id="chart">
+          <div>
+            <div class="flex-item">
+              <div style="display: block;">
+                <canvas
+                  baseChart
+                  width="400"
+                  height="250"
+                  [datasets]="lineChartData"
+                  [labels]="lineChartLabels"
+                  [options]="lineChartOptions"
+                  [colors]="lineChartColors"
+                  [legend]="lineChartLegend"
+                  [chartType]="lineChartType"
+                  [plugins]="lineChartPlugins"
+                  (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)"
+                ></canvas>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="predict-list col-lg-4 m-4 m-md-0">
+        <article
+          class="predict-value row"
+          [ngClass]="{
+            'text-success': this.ratings[i].rating >= 0 && i != 0,
+            'text-danger': this.ratings[i].rating < 0 && i != 0,
+            'text-primary' : i == 0
+          }"
+          *ngFor="let date of lineChartLabels; index as i"
+        >
+          <div class="date col-3">
+            {{ date | date: "dd/MM/yyyy" }}
+          </div>
+          <div class="rate col-3 text-right" style="font-weight: bold">
+            <i class="fa fa-long-arrow-up" aria-hidden="true"></i
+            ><ng-container *ngIf="this.ratings[i].rating > 0">+</ng-container>{{ this.ratings[i].rating * 100 | number: "1.0-2" }}%
+          </div>
+          <div class="rate col-3 text-right" style="font-weight: bold">
+            <i class="fa fa-long-arrow-up" aria-hidden="true"></i
+            ><ng-container *ngIf="this.ratings[i].rating > 0">+</ng-container>{{ this.ratings[i].difference | number: "1.0-2" }}
+          </div>
+          <div class="value col-3 text-right" style="font-weight: bold">
+            <i class="fa fa-long-arrow-up" aria-hidden="true"></i
+            >{{ lineChartData[0].data[i] | number: "1.0-2" }}
+          </div>
+        </article>
+      </div>
+    </article>
+  </div>
+  
