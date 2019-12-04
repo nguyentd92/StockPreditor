@@ -1,5 +1,106 @@
+@import "src/styles/variables";
+
 .selectors {
   * {
     margin-right: 0.5em;
   }
 }
+
+.stock-news {
+  font-size: 2rem;
+
+  .stock-news__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .stock-name {
+      color: $accent;
+      margin: 0;
+    }
+
+    .stock-today {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 40%;
+      * {
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    h2 {
+      color: $accent;
+
+      i {
+        color: $light;
+        margin-right: 1rem;
+      }
+    }
+  }
+}
+
+ul.type-selector {
+  list-style-type: none;
+  display: flex;
+  border-radius: 1rem;
+  background: $light;
+  -webkit-padding-start: 0;
+
+  li {
+    button {
+      border: none;
+      border-radius: 50%;
+      background: transparent;
+      border-radius: 1rem;
+      padding: 0.25rem 1.25rem;
+      outline: none;
+      text-transform: capitalize;
+    }
+
+    &.selected {
+      button {
+        background: $accent;
+        color: #fff;
+      }
+    }
+  }
+}
+
+.chart-container {
+  flex-basis: 60%;
+  flex-shrink: 0;
+}
+
+.table-container {
+  flex-basis: 40%;
+  flex-shrink: 0;
+  font-size: 1rem;
+
+  table {
+    width: 100%;
+    border: 1px solid $light;
+    tr {
+      &:nth-child(odd) {
+        background: $light;
+      }
+
+      td {
+        padding: 0.5rem 1rem;
+
+        &.price {
+          text-align: right;
+        }
+      }
+    }
+  }
+}
+
+// .success {
+//   color: $danger;
+// }
+
+// .danger {
+//   color: $success;
+// }

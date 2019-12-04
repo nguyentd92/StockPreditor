@@ -1,4 +1,4 @@
-<div *ngIf="data$ | async as stockList">
+<!-- <div *ngIf="data$ | async as stockList">
   <section class="selectors">
     <mat-form-field>
       <mat-label>Name</mat-label>
@@ -72,13 +72,146 @@
     >
       Close
     </button>
-    <!-- <div id="status">
+    <div id="status">
                   <label>{{ data.chosen_id }}</label>
                   <span>994.03</span>
                   <span>+9.36</span>
                   <span>+0.95%</span>
-                </div> -->
+                </div>
   </section>
   <app-stock [values]="currentValues"></app-stock>
-  <!-- <app-predictor></app-predictor> -->
-</div>
+  <app-predictor></app-predictor>
+</div> -->
+
+<section class="stock-news">
+  <div class="stock-news__header">
+    <h2>
+      <i class="fas fa-chart-area"></i>
+      <span class="stock-name">{{ chosenId }}</span>
+    </h2>
+
+    <div class="stock-today">
+      <h2>LAST:</h2>
+
+      <span
+        class="percent"
+        [ngClass]="{
+          success: showLastValues[0]?.percent >= 0,
+          danger: showLastValues[0]?.percent < 0
+        }"
+      >
+        <i
+          *ngIf="showLastValues[0]?.percent >= 0"
+          class="fas fa-long-arrow-alt-up"
+        ></i>
+        <i
+          *ngIf="showLastValues[0]?.percent < 0"
+          class="fas fa-long-arrow-alt-down"
+        ></i>
+        {{ showLastValues[0]?.percent | number: "1.0-2" }}%</span
+      >
+
+      <span
+        class="diff"
+        [ngClass]="{
+          success: showLastValues[0]?.diff >= 0,
+          danger: showLastValues[0]?.diff < 0
+        }"
+      >
+        <i
+          *ngIf="showLastValues[0]?.diff >= 0"
+          class="fas fa-long-arrow-alt-up"
+        ></i>
+        <i
+          *ngIf="showLastValues[0]?.diff < 0"
+          class="fas fa-long-arrow-alt-down"
+        ></i>
+        {{ showLastValues[0]?.diff | number: '1.0-2'}}%</span
+      >
+
+      <span class="price">{{ showLastValues[0]?.value }}</span>
+    </div>
+  </div>
+</section>
+
+<section class="info">
+  <div style="display: flex; margin-top: 1rem; margin-left: 1rem;">
+    <ul class="type-selector">
+      <li *ngFor="let item of modes" [ngClass]="{ selected: item.selected }">
+        <button (click)="switchMode(item.title)">{{ item.title }}</button>
+      </li>
+    </ul>
+  </div>
+
+  <div
+    style="display: flex; justify-content: space-between; align-items: center;"
+  >
+    <div class="chart-container">
+      <app-stock [values]="currentValues"></app-stock>
+    </div>
+
+    <div class="table-container">
+      <table style="width: 100%;">
+        <tr *ngFor="let item of showLastValues">
+          <td>{{ item.date }}</td>
+
+          <td
+            [ngClass]="{ success: item.percent >= 0, danger: item.percent < 0 }"
+          >
+            <i *ngIf="item.percent >= 0" class="fas fa-long-arrow-alt-up"></i>
+            <i *ngIf="item.percent < 0" class="fas fa-long-arrow-alt-down"></i>
+            {{ item.percent | number: "1.2-2" }}%
+          </td>
+
+          <td
+            class="danger"
+            [ngClass]="{ success: item.diff >= 0, danger: item.diff < 0 }"
+          >
+            <i *ngIf="item.diff >= 0" class="fas fa-long-arrow-alt-up"></i>
+            <i *ngIf="item.diff < 0" class="fas fa-long-arrow-alt-down"></i>
+            {{ item.diff | number: "2.2-2" }}
+          </td>
+
+          <td class="price">{{ item.value | number: "1.2-2" }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="stock-news" style="margin-top: 2rem">
+  <div class="stock-news__header">
+    <h2>
+      <i class="fas fa-glasses"></i>
+      <span class="stock-name">Dự đoán tăng trưởng giá VN-INDEX</span>
+    </h2>
+  </div>
+
+  <section class="info" style="margin-bottom: 5rem">
+    <div
+      style="display: flex; justify-content: space-between; align-items: center;"
+    >
+      <div class="chart-container">
+        <app-stock [values]="currentValues"></app-stock>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <tr *ngFor="let item of [].constructor(10); index as index">
+            <td>20/09/2019</td>
+
+            <td class="success">
+              <i class="fas fa-long-arrow-alt-up"></i>1.12%
+            </td>
+
+            <td class="danger">
+              <i class="fas fa-long-arrow-alt-down"></i>1.12%
+            </td>
+
+            <td class="price">$25.02</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </section>
+</section>

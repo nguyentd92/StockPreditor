@@ -78,11 +78,18 @@ namespace StockPredictor.Library
 
         public static string ReadTxtFileByFileName(string fileName, string path)
         {
-            List<string> fileList = GetFilesList(path);
+            try
+            {
+                List<string> fileList = GetFilesList(path);
 
-            string fileUrl = fileList.Find(url => url.Contains(fileName));
+                string fileUrl = fileList.Find(url => url.Contains(fileName));
 
-            return ReadTxtFile(fileUrl);
+                return ReadTxtFile(fileUrl);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

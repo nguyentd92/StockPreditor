@@ -1,0 +1,17 @@
+$accent: #ff5831;
+$secondary: #686868;
+$light: #f2f2f2;
+
+$success: #459645;
+$danger: #c40000;
+$medium: #dbdbdb;
+
+:export {
+  accent: $accent;
+  secondary: $secondary;
+  light: $light;
+
+  success: $success;
+  danger: $danger;
+  medium: $medium;
+}

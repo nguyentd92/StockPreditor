@@ -1,28 +1,27 @@
 <main class="container">
-    <article id="stock-chart">
-      <section id="chart">
-        <div>
-          <div class="flex-item">
-            <div style="display: block;">
-              <canvas
-                baseChart
-                width="400"
-                
-                height="250"
-                [datasets]="lineChartData"
-                [labels]="lineChartLabels"
-                [options]="lineChartOptions"
-                [colors]="lineChartColors"
-                [legend]="lineChartLegend"
-                [chartType]="lineChartType"
-                [plugins]="lineChartPlugins"
-                (chartHover)="chartHovered($event)"
-                (chartClick)="chartClicked($event)"
-              ></canvas>
-            </div>
+  <article id="stock-chart">
+    <section id="chart">
+      <div>
+        <div class="flex-item">
+          <div style="display: block;">
+            <canvas
+              baseChart
+              width="400"
+              height="250"
+              [datasets]="lineChartData"
+              [labels]="lineChartLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"
+            ></canvas>
           </div>
         </div>
-      </section>
-    </article>
-    </main>
-    
+      </div>
+    </section>
+  </article>
+</main>
+

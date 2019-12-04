@@ -12,22 +12,7 @@ export class StockComponent implements OnChanges {
   @Input() values: {
     value: number;
     date: string;
-  }[]
-
-  ngOnChanges()
-  {
-    this.lineChartLabels = []
-    this.lineChartData[0].data = []
-    if (this.values)
-    {
-      this.values.map(e => {
-        this.lineChartLabels.push(e.date)
-        this.lineChartData[0].data.push(e.value)
-      })
-    }
-
-    console.log(this.lineChartData)
-  }
+  }[];
 
   public lineChartLabels: Label[] = [];
 
@@ -40,7 +25,7 @@ export class StockComponent implements OnChanges {
   };
 
   public lineChartData: ChartDataSets[] = [
-    { data: [28, 48, 40, 19, 86, 27, 90], label: "Value" }
+    { data: [28, 48, 40, 19, 86, 27, 90], label: "Giá CP" }
   ];
 
   public lineChartOptions: ChartOptions & { annotation: any } = {
@@ -72,11 +57,11 @@ export class StockComponent implements OnChanges {
           mode: "vertical",
           scaleID: "x-axis-0",
           value: "March",
-          borderColor: "orange",
+          borderColor: "#FF5831",
           borderWidth: 2,
           label: {
             enabled: true,
-            fontColor: "orange",
+            fontColor: "#ff5831",
             content: "LineAnno"
           }
         }
@@ -87,7 +72,7 @@ export class StockComponent implements OnChanges {
     {
       // grey
       backgroundColor: "transparent",
-      borderColor: "red",
+      borderColor: "#FF5831",
       pointBackgroundColor: "transparent",
       pointBorderColor: "transparent",
       pointHoverBackgroundColor: "black",
@@ -118,6 +103,16 @@ export class StockComponent implements OnChanges {
 
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
+  ngOnChanges() {
+    this.lineChartLabels = [];
+    this.lineChartData[0].data = [];
+    if (this.values) {
+      this.values.map(e => {
+        this.lineChartLabels.push(e.date);
+        this.lineChartData[0].data.push(e.value);
+      });
+    }
+  }
   // events
   public chartClicked({
     event,
@@ -138,5 +133,4 @@ export class StockComponent implements OnChanges {
   }): void {
     console.log(event, active);
   }
-  
 }

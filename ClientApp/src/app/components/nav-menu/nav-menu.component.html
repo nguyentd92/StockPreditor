@@ -1,10 +1,13 @@
 <header>
   <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow"
   >
-    <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">StockPredictor</a>
-      <button
+    <div class="container-fluid">
+      <a class="navbar-brand" [routerLink]="['/']">
+        <img src="assets/images/logo.png" />
+      </a>
+      <h1>AI Dự đoán tăng trưởng giá cổ phiếu</h1>
+      <!-- <button
         class="navbar-toggler"
         type="button"
         data-toggle="collapse"
@@ -27,7 +30,7 @@
           >
             <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
           </li>
-          <!-- <li class="nav-item" [routerLinkActive]="['link-active']">
+          <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/counter']"
               >Counter</a
             >
@@ -36,8 +39,33 @@
             <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
               >Fetch data</a
             >
-          </li> -->
+          </li>
         </ul>
+      </div> -->
+
+      <div class="search-wrapper">
+        <div class="form-search" [ngClass]="{ focused: isFocused }">
+          <form class="input-wrapper" [formGroup]="searchForm">
+            <input
+              formControlName="keyword"
+              (focus)="isFocused = true"
+              (focusout)="focusOut()"
+              class="search-input"
+              placeholder="Nhập mã CP ..."
+            />
+
+            <div class="icon">
+              <i [hidden]="isSearching" class="fab fa-sistrix"></i>
+              <div [hidden]="!isSearching" class="spinner-grow">
+                <span class="sr-only">...</span>
+              </div>
+            </div>
+          </form>
+
+          <ul class="suggest" [hidden]="!suggestList || !isFocused">
+            <li [routerLink]="[item]" routerLinkActive="active" [ngClass]="{disabled: isSearching}" *ngFor="let item of suggestList">{{ item }}</li>
+          </ul>
+        </div>
       </div>
     </div>
   </nav>

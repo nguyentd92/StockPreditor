@@ -1,6 +1,29 @@
 <body>
+  <ngx-json-ld>
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org/",
+        "@type": "Organization",
+        "name": "AI Dự đoán tăng trưởng giá cổ phiếu",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Huế, Việt Nam",
+          "postalCode": "530000",
+          "streetAddress": "20 Lê Lợi"
+        },
+        "image": "dell-30in-lcd.jpg",
+        "email": "hitecdhh@gmail.com",
+        "url": "http://stock.smartdoc.vn",
+        "sponsor": {
+          "@type": "Organization",
+          "name": "SmartDoc",
+          "url": "http://smartdoc.vn/"
+        }
+      }
+    </script>
+  </ngx-json-ld>
   <app-nav-menu></app-nav-menu>
-  <div class="container">
+  <div class="px-5 pt-4 overflow-auto">
     <router-outlet></router-outlet>
   </div>
 </body>
