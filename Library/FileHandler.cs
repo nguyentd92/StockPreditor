@@ -5,7 +5,11 @@ namespace StockPredictor.Library
         public static string GetFileName(string path)
         {
             //path: <dir>/<filename>.<extension>
-            int lastIndexOfSlash = path.LastIndexOf('/');
+
+            // On Mac
+            const bool IsMac = false;
+            const string Char = IsMac ? @"/" : @"\";
+            int lastIndexOfSlash = path.LastIndexOf(Char);
             int dotIndex = path.LastIndexOf('.');
 
             string result = path.Substring(lastIndexOfSlash + 1, dotIndex - lastIndexOfSlash - 1);
