@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Hangfire;
 using Hangfire.SqlServer;
 using System;
+using StockPredictor.Services;
 
 namespace StockPredictor
 {
@@ -39,6 +40,8 @@ namespace StockPredictor
             //     }));
 
             // services.AddHangfireServer();
+
+            services.AddScoped<IPredictService, PredictService>();
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
