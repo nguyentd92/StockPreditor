@@ -10,6 +10,7 @@ using Hangfire.SqlServer;
 using System;
 using StockPredictor.Services;
 using StockPredictor.Actions;
+using StockPredictor.Hangfire;
 
 namespace StockPredictor
 {
@@ -58,7 +59,13 @@ namespace StockPredictor
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             GlobalConfiguration.Configuration.UseSqlServerStorage("Server=123.25.115.11,1433;User Id=stockprice; Password=123123123");
-            app.UseHangfireDashboard();
+
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions
+            {
+                Authorization = new[] { new MyAuthorizationFilter() }
+            });
+
+            
 
             BackgroundJob.Enqueue(() => Console.WriteLine("Fire and forget"));
 
