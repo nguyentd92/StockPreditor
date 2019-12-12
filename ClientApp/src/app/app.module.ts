@@ -16,6 +16,8 @@ import { ChartsModule } from "ng2-charts";
 import { P404Component, P500Component } from "./pages";
 import { ErrorInterceptor } from "./core/interceptors/error.interceptor";
 import { NgxJsonLdModule } from '@ngx-lite/json-ld';
+import { CalcDatePipe } from './core/pipes/calc-date.pipe';
+import { DatePipe } from "@angular/common";
 
 @NgModule({
   imports: [
@@ -28,7 +30,7 @@ import { NgxJsonLdModule } from '@ngx-lite/json-ld';
     ReactiveFormsModule,
     NgxJsonLdModule,
     RouterModule.forRoot([
-      { path: "", redirectTo: "^VNINDEX", pathMatch: "full" },
+      { path: "", redirectTo: "VNINDEX", pathMatch: "full" },
       { path: "404", component: P404Component },
       { path: "500", component: P500Component },
       { path: ":id", component: StockPredictorComponent },
@@ -37,14 +39,16 @@ import { NgxJsonLdModule } from '@ngx-lite/json-ld';
     BrowserAnimationsModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    DatePipe
   ],
   bootstrap: [AppComponent],
   declarations: [
     AppComponent,
     ...fromComponents.components,
     ...fromContainers.containers,
-    ...fromPages.pages
+    ...fromPages.pages,
+    CalcDatePipe
   ]
 })
 export class AppModule {}

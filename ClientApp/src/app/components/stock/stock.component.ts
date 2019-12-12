@@ -14,6 +14,8 @@ export class StockComponent implements OnChanges {
     date: string;
   }[];
 
+  @Input() predicts: number[];
+
   public lineChartLabels: Label[] = [];
 
   chartBoundaries: {
@@ -25,7 +27,8 @@ export class StockComponent implements OnChanges {
   };
 
   public lineChartData: ChartDataSets[] = [
-    { data: [28, 48, 40, 19, 86, 27, 90], label: "Giá CP" }
+    { data: [28, 48, 40, 19, 86, 27, 90], label: "Giá CP" },
+    { data: [], label: "Dự đoán"}
   ];
 
   public lineChartOptions: ChartOptions & { annotation: any } = {
@@ -82,10 +85,10 @@ export class StockComponent implements OnChanges {
       // dark grey
       backgroundColor: "transparent",
       borderColor: "blue",
-      pointBackgroundColor: "blue",
-      pointBorderColor: "#fff",
-      pointHoverBackgroundColor: "#fff",
-      pointHoverBorderColor: "rgba(77,83,96,1)"
+      pointBackgroundColor: "transparent",
+      pointBorderColor: "transparent",
+      pointHoverBackgroundColor: "black",
+      pointHoverBorderColor: "black"
     },
     {
       // red
@@ -104,6 +107,7 @@ export class StockComponent implements OnChanges {
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
   ngOnChanges() {
+    console.log(this.lineChartData)
     this.lineChartLabels = [];
     this.lineChartData[0].data = [];
     if (this.values) {
@@ -111,6 +115,9 @@ export class StockComponent implements OnChanges {
         this.lineChartLabels.push(e.date);
         this.lineChartData[0].data.push(e.value);
       });
+    }
+    if (this.predicts) {
+      this.lineChartData[1].data = this.predicts;
     }
   }
   // events

@@ -7,12 +7,21 @@ namespace StockPredictor.Library
             //path: <dir>/<filename>.<extension>
 
             // On Mac
-            const bool IsMac = false;
-            const string Char = IsMac ? @"/" : @"\";
-            int lastIndexOfSlash = path.LastIndexOf(Char);
-            int dotIndex = path.LastIndexOf('.');
+            path.Replace("\\", "/");
 
-            string result = path.Substring(lastIndexOfSlash + 1, dotIndex - lastIndexOfSlash - 1);
+            int lastIndexOfSlash = path.LastIndexOf("/");
+            int dotIndex = path.LastIndexOf('.');
+            string result;
+
+            if (dotIndex < 0)
+            {
+                result = path.Substring(lastIndexOfSlash + 1, path.Length - lastIndexOfSlash - 1);
+            }
+            else
+            {
+                result = path.Substring(lastIndexOfSlash + 1, dotIndex - lastIndexOfSlash - 1);
+            }
+
             return result;
         }
     }

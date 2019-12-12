@@ -6,7 +6,7 @@ import {
   HttpInterceptor
 } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
-import { catchError } from "rxjs/operators";
+import { catchError, map } from "rxjs/operators";
 import { Router } from "@angular/router";
 
 @Injectable()
@@ -18,6 +18,9 @@ export class ErrorInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
+      map(
+        r => (console.log(r), r)
+      ),
       catchError(err => {
         switch (err.status) {
           case 404:

@@ -1,8 +1,9 @@
 <body>
-  <ngx-json-ld [json]="schema">
-  </ngx-json-ld>
+  <ngx-json-ld [json]="schema"> </ngx-json-ld>
   <app-nav-menu></app-nav-menu>
-  <div class="px-5 pt-4 overflow-auto">
-    <router-outlet></router-outlet>
+  <div class="overflow-auto">
+    <div class="container pt-3">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </body>

@@ -2,46 +2,13 @@
   <nav
     class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow"
   >
-    <div class="container-fluid">
-      <a class="navbar-brand" [routerLink]="['/']">
-        <img src="assets/images/logo.png" />
-      </a>
-      <h1>AI Stock Prediction</h1>
-      <!-- <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target=".navbar-collapse"
-        aria-label="Toggle navigation"
-        [attr.aria-expanded]="isExpanded"
-        (click)="toggle()"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
-        [ngClass]="{ show: isExpanded }"
-      >
-        <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-              >Fetch data</a
-            >
-          </li>
-        </ul>
-      </div> -->
+    <div class="container app-header">
+      <div class="app-title">
+        <a class="navbar-brand" [routerLink]="['/']">
+          <img src="assets/images/logo.png" />
+        </a>
+        <h1>AI Stock Prediction</h1>
+      </div>
 
       <div class="search-wrapper">
         <div class="form-search" [ngClass]="{ focused: isFocused }">
@@ -63,7 +30,14 @@
           </form>
 
           <ul class="suggest" [hidden]="!suggestList || !isFocused">
-            <li [routerLink]="[item]" routerLinkActive="active" [ngClass]="{disabled: isSearching}" *ngFor="let item of suggestList">{{ item }}</li>
+            <li
+              [routerLink]="[item]"
+              routerLinkActive="active"
+              [ngClass]="{ disabled: isSearching }"
+              *ngFor="let item of suggestList"
+            >
+              {{ item }}
+            </li>
           </ul>
         </div>
       </div>

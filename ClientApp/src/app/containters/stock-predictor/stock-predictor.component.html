@@ -1,97 +1,12 @@
-<!-- <div *ngIf="data$ | async as stockList">
-  <section class="selectors">
-    <mat-form-field>
-      <mat-label>Name</mat-label>
-      <mat-select [(value)]="chosenId" (selectionChange)="onSelect()">
-        <mat-option *ngFor="let stock of stockList" [value]="stock">{{
-          stock
-        }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button
-      *ngIf="mode != 'Open'"
-      mat-stroked-button
-      color="accent"
-      (click)="switchMode('Open')"
-    >
-      Open
-    </button>
-    <button
-      *ngIf="mode == 'Open'"
-      mat-flat-button
-      color="accent"
-      (click)="switchMode('Open')"
-    >
-      Open
-    </button>
-    <button
-      *ngIf="mode != 'High'"
-      mat-stroked-button
-      color="accent"
-      (click)="switchMode('High')"
-    >
-      High
-    </button>
-    <button
-      *ngIf="mode == 'High'"
-      mat-flat-button
-      color="accent"
-      (click)="switchMode('High')"
-    >
-      High
-    </button>
-    <button
-      *ngIf="mode != 'Low'"
-      mat-stroked-button
-      color="accent"
-      (click)="switchMode('Low')"
-    >
-      Low
-    </button>
-    <button
-      *ngIf="mode == 'Low'"
-      mat-flat-button
-      color="accent"
-      (click)="switchMode('Low')"
-    >
-      Low
-    </button>
-    <button
-      *ngIf="mode != 'Close'"
-      mat-stroked-button
-      color="accent"
-      (click)="switchMode('Close')"
-    >
-      Close
-    </button>
-    <button
-      *ngIf="mode == 'Close'"
-      mat-flat-button
-      color="accent"
-      (click)="switchMode('Close')"
-    >
-      Close
-    </button>
-    <div id="status">
-                  <label>{{ data.chosen_id }}</label>
-                  <span>994.03</span>
-                  <span>+9.36</span>
-                  <span>+0.95%</span>
-                </div>
-  </section>
-  <app-stock [values]="currentValues"></app-stock>
-  <app-predictor></app-predictor>
-</div> -->
-
 <section class="stock-news">
   <div class="stock-news__header">
-    <h2>
+    <h2 class="stock-title">
       <i class="fas fa-chart-area"></i>
       <span class="stock-name">{{ chosenId }}</span>
     </h2>
 
     <div class="stock-today">
-      <h2>LAST:</h2>
+      <h2 class="title">LAST:</h2>
 
       <span
         class="percent"
@@ -126,7 +41,7 @@
           *ngIf="showLastValues[0]?.diff < 0"
           class="fas fa-long-arrow-alt-down"
         ></i>
-        {{ showLastValues[0]?.diff | number: '1.0-2'}}%</span
+        {{ showLastValues[0]?.diff | number: "1.0-2" }}%</span
       >
 
       <span class="price">{{ showLastValues[0]?.value }}</span>
@@ -135,7 +50,7 @@
 </section>
 
 <section class="info">
-  <div style="display: flex; margin-top: 1rem; margin-left: 1rem;">
+  <div style="display: flex; margin-top: 1rem">
     <ul class="type-selector">
       <li *ngFor="let item of modes" [ngClass]="{ selected: item.selected }">
         <button (click)="switchMode(item.title)">{{ item.title }}</button>
@@ -143,11 +58,9 @@
     </ul>
   </div>
 
-  <div
-    style="display: flex; justify-content: space-between; align-items: center;"
-  >
+  <div class="info-container">
     <div class="chart-container">
-      <app-stock [values]="currentValues"></app-stock>
+      <app-stock [values]="currentValues" [predicts]="predicts"></app-stock>
     </div>
 
     <div class="table-container">
@@ -181,34 +94,50 @@
 
 <section class="stock-news" style="margin-top: 2rem">
   <div class="stock-news__header">
-    <h2>
+    <h2 class="stock-title">
       <i class="fas fa-glasses"></i>
-      <span class="stock-name">Dự đoán tăng trưởng giá VN-INDEX</span>
+      <span class="stock-name">Dự đoán tăng trưởng giá {{ chosenId }}</span>
     </h2>
   </div>
 
   <section class="info" style="margin-bottom: 5rem">
-    <div
-      style="display: flex; justify-content: space-between; align-items: center;"
-    >
+    <div class="info-container">
       <div class="chart-container">
-        <app-stock [values]="currentValues"></app-stock>
+        <app-predictor
+          [values]="monthPrediction"
+          [arrDate]="arrDate"
+        ></app-predictor>
       </div>
 
       <div class="table-container">
         <table>
-          <tr *ngFor="let item of [].constructor(10); index as index">
-            <td>20/09/2019</td>
+          <tr *ngFor="let item of monthPrediction; index as index">
+            <td>{{ arrDate[index] }}</td>
 
-            <td class="success">
-              <i class="fas fa-long-arrow-alt-up"></i>1.12%
+            <td [ngClass]="{ success: predictRatio[index].percent >= 0, danger: predictRatio[index].percent < 0 }">
+              <i
+                *ngIf=" predictRatio[index].percent >= 0"
+                class="fas fa-long-arrow-alt-up"
+              ></i>
+              <i
+                *ngIf=" predictRatio[index].percent < 0"
+                class="fas fa-long-arrow-alt-down"
+              ></i>
+              {{ predictRatio[index].percent | number: "1.2-2" }}%
             </td>
 
-            <td class="danger">
-              <i class="fas fa-long-arrow-alt-down"></i>1.12%
+            <td [ngClass]="{ success: predictRatio[index].diff >= 0, danger: predictRatio[index].diff < 0 }">
+              <i
+              *ngIf=" predictRatio[index].diff >= 0"
+              class="fas fa-long-arrow-alt-up"
+            ></i>
+            <i
+              *ngIf=" predictRatio[index].diff < 0"
+              class="fas fa-long-arrow-alt-down"
+            ></i>{{ predictRatio[index].diff | number: "1.2-2" }}
             </td>
 
-            <td class="price">$25.02</td>
+            <td class="price">{{ item | number: "1.2-2" }}</td>
           </tr>
         </table>
       </div>

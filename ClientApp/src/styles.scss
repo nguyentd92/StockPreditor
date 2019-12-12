@@ -22,6 +22,11 @@ html,
 body {
   height: 100vh !important;
   box-sizing: border-box;
+  font-size: 16px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
 }
 
 body {
